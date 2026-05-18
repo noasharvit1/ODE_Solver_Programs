@@ -75,6 +75,63 @@ A graph of the solution is then displayed.
 
 ---
 
+## Project Structure
+Symbolic ODE Solver/
+│
+├── main.py
+├── parser.py
+├── classifier.py
+├── solver.py
+├── verifier.py
+├── plotter.py
+├── utils.py
+├── requirements.txt
+└── README.md
+
+---
+
+## Technologies Used
+
+The project is written in Python and uses the following libraries:
+
+sympy — symbolic mathematics and analytical solving
+numpy — numerical calculations
+matplotlib — plotting graphs
+re — parsing user input strings
+
+--- 
+
+## How to Run the Program
+1. Install Python
+
+Make sure Python is installed.
+
+2. Install Required Libraries
+
+Install the required packages using:
+
+pip install -r requirements.txt
+
+Or manually:
+
+pip install sympy numpy matplotlib
+3. Run the Program
+
+Run the main Python file:
+
+python main.py
+4. Enter the Equation
+
+Example:
+
+Enter equation:
+y' + 2*x*y = x
+
+Enter initial condition:
+y(0) = 1
+
+---
+
 ## Limitations
 The program is designed to solve only ODEs that belong to the supported categories.
 It may not solve equations that require numerical methods or more advanced analytical techniques.
