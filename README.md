@@ -124,6 +124,7 @@ pip install sympy numpy matplotlib
 Run the main Python file:
 
 python main.py
+
 4. Enter the Equation
 
 Example:
