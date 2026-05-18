@@ -106,22 +106,17 @@ re- parsing user input strings
 --- 
 
 ## How to Run the Program
-1. Install Python
+1. Install Python- Make sure Python is installed.
 
-Make sure Python is installed.
-
-2. Install Required Libraries
-
-Install the required packages using:
+2. Install Required Libraries- Install the required packages using:
 
 pip install -r requirements.txt
 
 Or manually:
 
 pip install sympy numpy matplotlib
-3. Run the Program
 
-Run the main Python file:
+3. Run the Program- Run the main Python file:
 
 python main.py
 
