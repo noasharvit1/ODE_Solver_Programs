@@ -76,6 +76,7 @@ A graph of the solution is then displayed.
 ---
 
 ## Project Structure
+
 ```text
 ODE_Solver_Project/
 │
@@ -90,7 +91,6 @@ ODE_Solver_Project/
 └── README.md
 ```
 ---
-
 ## Technologies Used
 
 The project is written in Python and uses the following libraries:
