@@ -95,10 +95,13 @@ ODE_Solver_Project/
 
 The project is written in Python and uses the following libraries:
 
-sympy — symbolic mathematics and analytical solving
-numpy — numerical calculations
-matplotlib — plotting graphs
-re — parsing user input strings
+sympy- symbolic mathematics and analytical solving
+
+numpy- numerical calculations
+
+matplotlib- plotting graphs
+
+re- parsing user input strings
 
 --- 
 
