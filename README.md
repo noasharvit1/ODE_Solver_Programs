@@ -76,6 +76,7 @@ A graph of the solution is then displayed.
 ---
 
 ## Project Structure
+```text
 ODE_Solver_Project/
 │
 ├── main.py
@@ -87,6 +88,7 @@ ODE_Solver_Project/
 ├── utils.py
 ├── requirements.txt
 └── README.md
+```
 ---
 
 ## Technologies Used
