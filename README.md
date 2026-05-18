@@ -76,7 +76,7 @@ A graph of the solution is then displayed.
 ---
 
 ## Project Structure
-Symbolic ODE Solver/
+ODE_Solver_Project/
 │
 ├── main.py
 ├── parser.py
@@ -87,7 +87,6 @@ Symbolic ODE Solver/
 ├── utils.py
 ├── requirements.txt
 └── README.md
-
 ---
 
 ## Technologies Used
