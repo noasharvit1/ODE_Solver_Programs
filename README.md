@@ -3,7 +3,7 @@
 ## Overview
 This project is a Python-based computational utility designed for solving 1st and 2nd-order Ordinary Differential Equations (ODEs) that possess known analytical solution methods. 
 
-*The program performs the following steps:*
+**The program performs the following steps:**
 
 1. Reads the user input- 
 - The equation and initial conditions are entered by the user as strings.
@@ -40,7 +40,18 @@ The framework is engineered to identify and execute closed-form solution paths f
 ## Input & Output Specifications
 
 ### Input Format
-The user interfaces with the program by providing the differential equation and the initial value conditions (IVPs) in a simple, structured string format via the command line.
+The program receives data interactively via the terminal using Python's built-in input() function. Upon running the script (python main.py), the program will prompt you to dynamically type the differential equation and the corresponding initial conditions directly into the console, without needing to modify the source code.
+
+To ensure the program parses the mathematical expressions correctly, please adhere to the following syntax rules when entering your equation:
+
+* Derivatives: Use standard prime notation for derivatives. Type y' for the first derivative and y'' for the second derivative.
+* Explicit Multiplication: You must explicitly include the multiplication operator (*) between numbers and variables, or between multiple variables. For example, enter 2*x*y rather than 2xy.
+* Mathematical Operators: Use standard programming operators for math functions:
+- Addition: +
+- Subtraction: -
+- Division: /
+- Power: **
+* Equation Format: The equation should explicitly include the equals sign (=).
 
 ### Expected Output
 *   **Mathematical Classification:** Terminal text identifying the taxonomy of the equation.
@@ -52,10 +63,22 @@ The user interfaces with the program by providing the differential equation and 
 ## Example
 *Input:*
 
-Equation: "y' + 2*x*y = x"
-Initial Condition: "y(0) = 1"
+- Case 1: First-Order ODE
+For a first-order differential equation, the program will prompt for the equation and one initial condition.
 
-*Output may include:*
+Please enter the differential equation: y' + 2*x*y = x
+Enter the initial value for x (x0): 0
+Enter the initial value for y (y0): 1
+
+- Case 2: Second-Order ODE
+For a second-order differential equation, use y'' for the second derivative. The program will prompt for two initial conditions: the initial value of the function ($y_0$) and the initial value of its first derivative ($y'_0$).
+
+Please enter the differential equation: y'' + 2*y' + y = 0
+Enter the initial value for x (x0): 0
+Enter the initial value for y (y0): 1
+Enter the initial value for y' (y'0): 0
+
+*Output may include (for case 1):*
 
 Equation type: First-order linear differential equation
 
@@ -116,21 +139,22 @@ Or manually:
 
 pip install sympy numpy matplotlib
 
-3. Run the Program- Run the main Python file:
+3. Open your terminal or command prompt, navigate to the project directory, and run the main Python script:
 
 python main.py
 
-4. Enter the Equation
+4. When prompted in the console, simply type your differential equation and the initial conditions.
 
 Example:
 
-Enter equation:
-y' + 2*x*y = x
+python main.py
 
-Enter initial condition:
-y(0) = 1
+Please enter the differential equation: y' + 2*x*y = x
+Enter the initial value for x (x0): 0
+Enter the initial value for y (y0): 1
 
----
+5. View the Results
+Once the inputs are entered, the program will parse the equation, solve the ODE, and output the numerical results (along with the plotted graph, if applicable).
 
 ## Limitations
 The program is designed to solve only ODEs that belong to the supported categories.
