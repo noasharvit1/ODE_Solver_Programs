@@ -44,14 +44,14 @@ The program receives data interactively via the terminal using Python's built-in
 
 To ensure the program parses the mathematical expressions correctly, please adhere to the following syntax rules when entering your equation:
 
-* Derivatives: Use standard prime notation for derivatives. Type y' for the first derivative and y'' for the second derivative.
-* Explicit Multiplication: You must explicitly include the multiplication operator (*) between numbers and variables, or between multiple variables. For example, enter 2*x*y rather than 2xy.
-* Mathematical Operators: Use standard programming operators for math functions:
+1. Derivatives: Use standard prime notation for derivatives. Type y' for the first derivative and y'' for the second derivative.
+2. Explicit Multiplication: You must explicitly include the multiplication operator (*) between numbers and variables, or between multiple variables. For example, enter 2*x*y rather than 2xy.
+3. Mathematical Operators: Use standard programming operators for math functions:
 - Addition: +
 - Subtraction: -
 - Division: /
 - Power: **
-* Equation Format: The equation should explicitly include the equals sign (=).
+4. Equation Format: The equation should explicitly include the equals sign (=).
 
 ### Expected Output
 *   **Mathematical Classification:** Terminal text identifying the taxonomy of the equation.
@@ -67,15 +67,20 @@ To ensure the program parses the mathematical expressions correctly, please adhe
 For a first-order differential equation, the program will prompt for the equation and one initial condition.
 
 Please enter the differential equation: y' + 2*x*y = x
+
 Enter the initial value for x (x0): 0
+
 Enter the initial value for y (y0): 1
 
 - Case 2: Second-Order ODE
 For a second-order differential equation, use y'' for the second derivative. The program will prompt for two initial conditions: the initial value of the function ($y_0$) and the initial value of its first derivative ($y'_0$).
 
 Please enter the differential equation: y'' + 2*y' + y = 0
+
 Enter the initial value for x (x0): 0
+
 Enter the initial value for y (y0): 1
+
 Enter the initial value for y' (y'0): 0
 
 *Output may include (for case 1):*
