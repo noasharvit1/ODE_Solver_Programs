@@ -61,7 +61,7 @@ To ensure the program parses the mathematical expressions correctly, please adhe
 *   **Visual Trajectory:** A 2D rendering of the solution curve, strictly bounded within its valid domain.
 
 ## Example
-*Input:*
+**Input:**
 
 - Case 1: First-Order ODE
 For a first-order differential equation, the program will prompt for the equation and one initial condition.
@@ -83,7 +83,7 @@ Enter the initial value for y (y0): 1
 
 Enter the initial value for y' (y'0): 0
 
-*Output may include (for case 1):*
+**Output may include (for case 1):**
 
 Equation type: First-order linear differential equation
 
@@ -155,7 +155,9 @@ Example:
 python main.py
 
 Please enter the differential equation: y' + 2*x*y = x
+
 Enter the initial value for x (x0): 0
+
 Enter the initial value for y (y0): 1
 
 5. View the Results
