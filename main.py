@@ -1,0 +1,121 @@
+
+"""
+main.py
+Entry point for the Symbolic ODE Solver.
+"""
+ 
+import sympy as sp
+from parser     import parse_ode, parse_initial_conditions
+from classifier import classify_ode, UnsupportedEquationError
+from solver     import solve_ode
+from utils      import find_domain
+from verifier   import verify_solution
+from plotter    import plot_solution
+ 
+UNSUPPORTED_MSG = (
+    "\nThis program supports only the following equation types:\n"
+    "  1. First-order separable equations\n"
+    "  2. First-order linear equations\n"
+    "  3. First-order exact equations\n"
+    "  4. First-order Bernoulli equations\n"
+    "  5. Second-order linear ODEs with constant coefficients"
+)
+ 
+ 
+def _print_solution(label: str, sol):
+    """
+    Print a solution (sp.Eq or list of sp.Eq) in the form:
+        y(x) = <expression>
+    """
+    print(f"{label}:")
+    if isinstance(sol, list):
+        # Some solvers return multiple branches (e.g. separable ±sqrt)
+        for i, s in enumerate(sol, 1):
+            rhs = sp.simplify(s.rhs)
+            print(f"  y(x) = {rhs}")
+    else:
+        rhs = sp.simplify(sol.rhs)
+        print(f"  y(x) = {rhs}")
+    print()
+ 
+ 
+def main():
+    print("=" * 60)
+    print("       Symbolic ODE Solver")
+    print("=" * 60)
+    print("Supported types:")
+    print("  • 1st-order: separable, linear, exact, Bernoulli")
+    print("  • 2nd-order: linear with constant coefficients")
+    print()
+ 
+    # ── 1. Input ────────────────────────────────────────────────────────────
+    equation_str = input("Please enter the differential equation: ").strip()
+ 
+    try:
+        eq, order, x, y = parse_ode(equation_str)
+    except ValueError as e:
+        msg = str(e)
+        if "not supported" in msg:
+            print(f"\n[UNSUPPORTED] {msg}")
+            print(UNSUPPORTED_MSG)
+        else:
+            print(f"\n[ERROR] {msg}")
+        return
+ 
+    ics, x0 = parse_initial_conditions(order)
+ 
+    print()
+ 
+    # ── 2. Classify ─────────────────────────────────────────────────────────
+    try:
+        label, hint = classify_ode(eq, order, x, y)
+    except UnsupportedEquationError as e:
+        print(f"[UNSUPPORTED] {e}")
+        print(UNSUPPORTED_MSG)
+        return
+ 
+    print(f"Equation type: {label}")
+    print()
+ 
+    # ── 3. Solve ────────────────────────────────────────────────────────────
+    try:
+        general_sol, particular_sol = solve_ode(eq, y, x, hint, ics)
+    except Exception as e:
+        print(f"[ERROR] Could not solve the equation: {e}")
+        return
+ 
+    _print_solution("General solution", general_sol)
+    _print_solution("Particular solution", particular_sol)
+ 
+    # ── 4. Domain ───────────────────────────────────────────────────────────
+    # Use the particular solution for domain analysis;
+    # if it's a list, use the first (positive) branch
+    part_for_domain = particular_sol[0] if isinstance(particular_sol, list) else particular_sol
+    try:
+        domain_str, a, b = find_domain(part_for_domain, x, x0)
+    except Exception:
+        domain_str, a, b = "(-oo, oo)", -sp.oo, sp.oo
+ 
+    print(f"Domain:\n  {domain_str}\n")
+ 
+    # ── 5. Verify ───────────────────────────────────────────────────────────
+    try:
+        verified = verify_solution(eq, part_for_domain, x, y)
+    except Exception:
+        verified = False
+ 
+    print("Verification:")
+    if verified:
+        print("  The solution satisfies the differential equation. [TRUE]\n")
+    else:
+        print("  Could not automatically verify the solution. [FALSE]\n")
+ 
+    # ── 6. Plot ─────────────────────────────────────────────────────────────
+    try:
+        plot_solution(part_for_domain, x, x0, a, b, equation_str)
+    except Exception as e:
+        print(f"[WARNING] Could not generate plot: {e}")
+ 
+ 
+if __name__ == "__main__":
+    main()
