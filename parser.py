@@ -41,6 +41,17 @@ def parse_ode(equation_str: str):
     """
     x = sp.Symbol('x')
     y = sp.Function('y')
+
+    # ── 0. Pre-processing for differential form (M*dx + N*dy = 0) ──
+    if 'dx' in equation_str and 'dy' in equation_str:
+        # Add multiplication sign (*) if missing before dx or dy 
+        # (e.g., 'y dx' becomes 'y*dx', or ')dy' becomes ')*dy')
+        equation_str = re.sub(r'([\)\w])\s*d([xy])', r'\1*d\2', equation_str)
+        
+        # Mathematical conversion to the standard derivative format the code already solves
+        # Dividing the entire equation by dx: M + N*(dy/dx) = 0 -> M*1 + N*y' = 0
+        equation_str = equation_str.replace('dx', '1')
+        equation_str = equation_str.replace('dy', "y'")
  
     # ── 1. Check for unsupported high-order derivatives FIRST ──────────────
     max_primes = max(

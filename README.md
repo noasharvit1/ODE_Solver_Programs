@@ -25,7 +25,6 @@ This project is a Python-based computational utility designed for solving 1st an
 - The program substitutes the solution back into the original differential equation to confirm that it satisfies the equation.
 
 ---
-
 ## Supported Equation Types & Solution Strategies
 The framework is engineered to identify and execute closed-form solution paths for the following mathematical classifications:
 
