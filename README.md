@@ -59,6 +59,8 @@ To ensure the program parses the mathematical expressions correctly, please adhe
 *   **Verification Status:** A strict boolean verification report confirming that back-substitution yields an exact identity (`TRUE`).
 *   **Visual Trajectory:** A 2D rendering of the solution curve, strictly bounded within its valid domain.
 
+**Note on Implicit Solutions:** If the program mathematically derives an implicit solution (where $y(x)$ cannot be isolated, which is common in Exact Equations), it will explicitly warn the user and safely skip the Domain Analysis, Verification, and Plotting steps, as these require an explicit functional form.
+
 ## Example
 **Input:**
 
@@ -114,6 +116,7 @@ ODE_Solver_Project/
 ├── verifier.py
 ├── plotter.py
 ├── utils.py
+├── test_equations.py
 ├── requirements.txt
 └── README.md
 ```
@@ -162,6 +165,10 @@ Enter the initial value for y (y0): 1
 5. View the Results
 Once the inputs are entered, the program will parse the equation, solve the ODE, and output the numerical results (along with the plotted graph, if applicable).
 
+6. Run tests:
+
+python test_equations.py
+
 ## Limitations
 The program is designed to solve only ODEs that belong to the supported categories.
 It may not solve equations that require numerical methods or more advanced analytical techniques.
@@ -172,8 +179,9 @@ Unsupported cases may include:
 2. Systems of differential equations
 3. Partial differential equations
 4. Equations without a closed-form analytical solution
-5. Equations with singularities that are difficult to detect automatically
-6. and more...
+5. **Implicit Solutions Processing:** While the program successfully computes and displays implicit solutions analytically, it cannot automatically verify, calculate the domain, or plot these types of solutions
+6. Equations with singularities that are difficult to detect automatically
+7. and more...
 
 ---
 

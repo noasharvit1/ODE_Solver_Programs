@@ -131,3 +131,4 @@ def parse_initial_conditions(order: int):
         ics[y(x).diff(x).subs(x, x0)] = dy0
  
     return ics, x0
+ 
