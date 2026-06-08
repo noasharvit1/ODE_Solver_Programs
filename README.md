@@ -218,6 +218,14 @@ The project includes an automated test suite (`test_equations.py`) covering vari
 | `y'' + 2y' + y = 0` | Second-order linear ODE (homogeneous) | $x_0=1, y_0=1, y'_0=1$ | Second-Order Explicit |
 | `y'' + sin(y) = 0` | Unsupported: Nonlinear second-order | N/A | Exception Raised |
 ---
+## AI Assistance & Acknowledgments
+This project was developed with the technical assistance of advanced AI language models, specifically [Gemini](https://gemini.google.com/u/1/app?pli=1) and [Claude](https://claude.ai/new).
+
+1. **Project Scope & Requirements Formulation:** I formally defined the core objectives of the symbolic ODE solver, clarifying the exact user terminal input structure, and structuring the mathematical and visual outputs.
+2. **Architecture & Module Description:** I formally defined the project's structure. 
+3. **Edge Case Analysis & Robustness:** Helped brainstorm potential edge cases, input validation issues, and mathematical limitations 
+4. **Automated Testing Suite:** Assisted in writing and structuring the comprehensive automated unit testing framework (`test_equations.py`) to systematically verify the parsing and classification logic across all supported equation categories.
+---
 
 ## Author
 This project was created as part of a Python programming course final project at the Weizmann Institute of Science.
