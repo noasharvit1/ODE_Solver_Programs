@@ -43,14 +43,15 @@ The program receives data interactively via the terminal using Python's built-in
 
 To ensure the program parses the mathematical expressions correctly, please adhere to the following syntax rules when entering your equation:
 
-1. Derivatives: Use standard prime notation for derivatives. Type y' for the first derivative and y'' for the second derivative.
-2. Explicit Multiplication: You must explicitly include the multiplication operator (*) between numbers and variables, or between multiple variables. For example, enter 2*x*y rather than 2xy.
-3. Mathematical Operators: Use standard programming operators for math functions:
+1. **Derivatives:** Use standard prime notation for derivatives. Type y' (and not $\frac{dy}{dx}$) for the first derivative and y''(and not $\frac{d^2y}{dx^2}$) for the second derivative.
+2. **Explicit Multiplication:** You must explicitly include the multiplication operator (*) between numbers and variables, or between multiple variables. For example, enter 2*x*y rather than 2xy.
+3. **Mathematical Operators:** Use standard programming operators for math functions:
 - Addition: +
 - Subtraction: -
 - Division: /
 - Power: **
-4. Equation Format: The equation should explicitly include the equals sign (=).
+4. **Equation Format:** The equation should explicitly include the equals sign (=).
+5. **Mathematical Functions:** When using functions such as sin, ln, log, etc., make sure to enclose their arguments in parentheses. Additionally, use exp(x) for the exponential function rather than e^x.
 
 ### Expected Output
 *   **Mathematical Classification:** Terminal text identifying the taxonomy of the equation.
@@ -62,30 +63,18 @@ To ensure the program parses the mathematical expressions correctly, please adhe
 **Note on Implicit Solutions:** If the program mathematically derives an implicit solution (where $y(x)$ cannot be isolated, which is common in Exact Equations), it will explicitly warn the user and safely skip the Domain Analysis, Verification, and Plotting steps, as these require an explicit functional form.
 
 ## Example
-**Input:**
 
-- Case 1: First-Order ODE
+### Case 1: First-Order ODE
 For a first-order differential equation, the program will prompt for the equation and one initial condition.
 
+**Terminal Interactive Session:**
+```text
 Please enter the differential equation: y' + 2*x*y = x
-
 Enter the initial value for x (x0): 0
-
 Enter the initial value for y (y0): 1
+```
 
-- Case 2: Second-Order ODE
-For a second-order differential equation, use y'' for the second derivative. The program will prompt for two initial conditions: the initial value of the function ($y_0$) and the initial value of its first derivative ($y'_0$).
-
-Please enter the differential equation: y'' + 2*y' + y = 0
-
-Enter the initial value for x (x0): 0
-
-Enter the initial value for y (y0): 1
-
-Enter the initial value for y' (y'0): 0
-
-**Output may include (for case 1):**
-
+**Output may include:**
 Equation type: First-order linear differential equation
 
 General solution:
@@ -100,8 +89,18 @@ Domain:
 Verification:
 The solution satisfies the differential equation.
 
-A graph of the solution is then displayed.
+Note: A graph of the specific solution will be automatically displayed in a separate window.
 
+### Case 2: Second-Order ODE
+For a second-order differential equation, use y'' for the second derivative. The program will prompt for two initial conditions: the initial value of the function ($y_0$) and the initial value of its first derivative ($y'_0$).
+
+**Terminal Interactive Session:**
+```text
+Please enter the differential equation: y'' + 2*y' + y = 0
+Enter the initial value for x (x0): 0
+Enter the initial value for y (y0): 1
+Enter the initial value for y' (y'0): 0
+```
 ---
 
 ## Project Structure
@@ -139,21 +138,21 @@ re- parsing user input strings
 1. Install Python- Make sure Python is installed.
 
 2. Install Required Libraries- Install the required packages using:
-
+``` bash
 pip install -r requirements.txt
-
+```
 Or manually:
-
+``` bash
 pip install sympy numpy matplotlib
-
+```
 3. Open your terminal or command prompt, navigate to the project directory, and run the main Python script:
-
+``` bash
 python main.py
-
+```
 4. When prompted in the console, simply type your differential equation and the initial conditions.
 
 Example:
-
+```text
 python main.py
 
 Please enter the differential equation: y' + 2*x*y = x
@@ -161,27 +160,29 @@ Please enter the differential equation: y' + 2*x*y = x
 Enter the initial value for x (x0): 0
 
 Enter the initial value for y (y0): 1
+```
 
 5. View the Results
 Once the inputs are entered, the program will parse the equation, solve the ODE, and output the numerical results (along with the plotted graph, if applicable).
 
 6. Run tests:
-
+``` bash
 python test_equations.py
-
+```
 ## Limitations
-The program is designed to solve only ODEs that belong to the supported categories.
-It may not solve equations that require numerical methods or more advanced analytical techniques.
 
-Unsupported cases may include:
+The program is specifically designed to solve standard Ordinary Differential Equations (ODEs) that fall within its supported categories. It is not built for complex numerical simulations or highly advanced mathematical techniques.
 
-1. Nonlinear second-order equations
-2. Systems of differential equations
-3. Partial differential equations
-4. Equations without a closed-form analytical solution
-5. **Implicit Solutions Processing:** While the program successfully computes and displays implicit solutions analytically, it cannot automatically verify, calculate the domain, or plot these types of solutions
-6. Equations with singularities that are difficult to detect automatically
-7. and more...
+### Unsupported Cases & Known Limitations:
+
+1. **Nonlinear Second-Order Equations:** Highly complex or non-linear higher-order equations are outside the scope of this solver.
+2. **Systems of ODEs:** The program currently processes single differential equations, not coupled systems.
+3. **Partial Differential Equations (PDEs):** Only ordinary differential equations are supported; equations with partial derivatives will not be parsed.
+4. **No Closed-Form Analytical Solution:** Equations whose general solutions cannot be expressed using standard mathematical functions.
+5. **Non-Elementary Integrals:** The solver may fail or hang if the equation requires evaluating complex integrals that do not possess a simple, closed-form antiderivative (e.g., integrals leading to special functions not supported by the core parser).
+6. **Implicit Solutions Processing:** While the program can often compute and display implicit solutions analytically, it cannot automatically verify them, calculate their exact domain, or generate their plots.
+7. **Undetected Singularities:** Equations with complex mathematical singularities or discontinuities that are difficult to detect automatically may produce incomplete or incorrect behavior.
+8. and more...
 
 ---
 
