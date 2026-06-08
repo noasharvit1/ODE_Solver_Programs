@@ -42,6 +42,9 @@ def parse_ode(equation_str: str):
     x = sp.Symbol('x')
     y = sp.Function('y')
 
+    # Handle plain dy/dx notation before the differential form block
+    equation_str = re.sub(r'\bdy\s*/\s*dx\b', "y'", equation_str)
+
     # ── 0. Pre-processing for differential form (M*dx + N*dy = 0) ──
     if 'dx' in equation_str and 'dy' in equation_str:
         # Add multiplication sign (*) if missing before dx or dy 
@@ -52,7 +55,9 @@ def parse_ode(equation_str: str):
         # Dividing the entire equation by dx: M + N*(dy/dx) = 0 -> M*1 + N*y' = 0
         equation_str = equation_str.replace('dx', '1')
         equation_str = equation_str.replace('dy', "y'")
- 
+    
+    equation_str = equation_str.replace('^', '**')
+
     # ── 1. Check for unsupported high-order derivatives FIRST ──────────────
     max_primes = max(
         (len(m.group(1)) for m in re.finditer(r"y(''+)", equation_str)),
@@ -103,8 +108,7 @@ def parse_ode(equation_str: str):
     except Exception as e:
         raise ValueError(
             "Could not parse the equation. Please check your syntax:\n"
-            "  • Use explicit multiplication:  2*x  not  2x\n"
-            "  • Use ** for powers:            x**2  not  x^2\n"
+            "  • Use ** or ^ for powers:  x**2  or  x^2\n"
             "  • Use y' and y'' for derivatives\n"
             f"  (Detail: {e})"
         )

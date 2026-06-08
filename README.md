@@ -82,7 +82,7 @@ Enter the initial value for y (y0): 1
 
 **Output may include:**
 ```text
-Equation type: First-order linear differential equation
+Equation type: First-order linear equation
 General solution:
 y(x) = C1*exp(-x**2) + 1/2
 Particular solution:
@@ -90,7 +90,7 @@ y(x) = 1/2 + 1/2*exp(-x**2)
 Domain:
 (-∞, ∞)
 Verification:
-The solution satisfies the differential equation.
+The solution satisfies the differential equation. [TRUE]\n"
 ```
 
 Note: A graph of the specific solution will be automatically displayed in a separate window.
