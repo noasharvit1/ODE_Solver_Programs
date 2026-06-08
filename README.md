@@ -75,19 +75,17 @@ Enter the initial value for y (y0): 1
 ```
 
 **Output may include:**
+```text
 Equation type: First-order linear differential equation
-
 General solution:
 y(x) = C1*exp(-x**2) + 1/2
-
 Particular solution:
 y(x) = 1/2 + 1/2*exp(-x**2)
-
 Domain:
 (-∞, ∞)
-
 Verification:
 The solution satisfies the differential equation.
+```
 
 Note: A graph of the specific solution will be automatically displayed in a separate window.
 
@@ -153,12 +151,8 @@ python main.py
 
 Example:
 ```text
-python main.py
-
 Please enter the differential equation: y' + 2*x*y = x
-
 Enter the initial value for x (x0): 0
-
 Enter the initial value for y (y0): 1
 ```
 
