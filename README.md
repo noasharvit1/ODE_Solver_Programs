@@ -83,17 +83,19 @@ Enter the initial value for y (y0): 1
 **Output may include:**
 ```text
 Equation type: First-order linear equation
+
 General solution:
 y(x) = C1*exp(-x**2) + 1/2
+
 Particular solution:
 y(x) = 1/2 + 1/2*exp(-x**2)
+
 Domain:
 (-∞, ∞)
+
 Verification:
 The solution satisfies the differential equation. [TRUE]\n"
 ```
-
-Note: A graph of the specific solution will be automatically displayed in a separate window.
 
 ### Case 2: Second-Order ODE
 For a second-order differential equation, use y'' for the second derivative. The program will prompt for two initial conditions: the initial value of the function ($y_0$) and the initial value of its first derivative ($y'_0$).
@@ -105,6 +107,25 @@ Enter the initial value for x (x0): 0
 Enter the initial value for y (y0): 1
 Enter the initial value for y' (y'0): 0
 ```
+**Output may include:**
+```text
+Equation type: Second-order linear ODE with constant coefficients (homogeneous)
+
+General solution:
+  y(x) = (C1 + C2*x)*exp(-x)
+
+Particular solution:
+  y(x) = (x + 1)*exp(-x)
+
+Domain:
+  (-oo, oo)
+
+Verification:
+  The solution satisfies the differential equation. [TRUE]
+  **Output may include:**
+```
+
+Note: A graph of the specific solution will be automatically displayed in a separate window.
 ---
 
 ## Project Structure
@@ -184,6 +205,19 @@ The program is specifically designed to solve standard Ordinary Differential Equ
 7. **Undetected Singularities:** Equations with complex mathematical singularities or discontinuities that are difficult to detect automatically may produce incomplete or incorrect behavior.
 8. and more...
 
+---
+## Verification and Test Cases
+
+The project includes an automated test suite (`test_equations.py`) covering various differential equation types and potential syntax errors. Below is a matrix of standard mathematical test cases used to verify the solver's robustness:
+
+| Equation | Expected Classification | Initial Conditions | Expected Solution Type |
+| :--- | :--- | :--- | :--- |
+| `y' = 2xy` | First-order separable equation | $x_0=1, y_0=1$ | Explicit (Real) |
+| `y' = x^2/y^2` | First-order separable equation | $x_0=1, y_0=1$ | Explicit (Multi-branch) |
+| `y' + y/x = sin(x)/x` | First-order Bernoulli equation | $x_0=1, y_0=\pi/2$ | Explicit |
+| `exp(y)+(x*exp(y)+2y)*y'=0` | First-order exact equation | $x_0=1, y_0=1$ | Implicit (Analysis skipped) |
+| `y'' + 2y' + y = 0` | Second-order linear ODE (homogeneous) | $x_0=1, y_0=1, y'_0=1$ | Second-Order Explicit |
+| `y'' + sin(y) = 0` | Unsupported: Nonlinear second-order | N/A | Exception Raised |
 ---
 
 ## Author

@@ -79,6 +79,7 @@ class TestODESolverFramework(unittest.TestCase):
         label2, _ = classify_ode(eq2, order2, x2, y2)
         self.assertEqual(label2, "First-order Bernoulli equation")
     
+
     def test_second_order_linear_constant_coefficients(self):
         """Test 2nd-Order Linear ODEs with Constant Coefficients (Homogeneous)."""
         # Example: y'' + 2y' + y = 0
