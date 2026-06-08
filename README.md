@@ -43,15 +43,21 @@ The program receives data interactively via the terminal using Python's built-in
 
 To ensure the program parses the mathematical expressions correctly, please adhere to the following syntax rules when entering your equation:
 
-1. **Derivatives:** Use standard prime notation for derivatives. Type y' (and not $\frac{dy}{dx}$) for the first derivative and y''(and not $\frac{d^2y}{dx^2}$) for the second derivative.
-2. **Explicit Multiplication:** You must explicitly include the multiplication operator (*) between numbers and variables, or between multiple variables. For example, enter 2*x*y rather than 2xy.
+1. **Derivatives Notation:**
+    * **First-Order:** You can use either standard prime notation (`y'`) or Leibniz notation (`dy/dx`). Both are fully supported. 
+      * *Example:* `y' + 2xy = x` and `dy/dx + 2xy = x` are treated identically. This also ensures native support for first-order exact equations written in differential form ($Mdx + Ndy = 0$).
+    * **Second-Order:** For second-order equations, you **must** use the prime notation (`y''`). Leibniz notation for higher orders (e.g., `d^2y/dx^2`) is currently outside the scope of the parser and is not supported.
+2. **Implicit Multiplication Support:** The program features a built-in pre-parser that automatically fixes missing multiplication operators in standard mathematical notations. For example:
+    * Entering `2xy` will be correctly interpreted as `2*x*y`.
+    * Entering `3(x+y)` will be correctly interpreted as `3*(x+y)`.
+    * *Note:* To ensure error-free parsing across all edge cases, explicit operators (`2*x*y`) are always safe and highly recommended.
 3. **Mathematical Operators:** Use standard programming operators for math functions:
-- Addition: +
-- Subtraction: -
-- Division: /
-- Power: **
-4. **Equation Format:** The equation should explicitly include the equals sign (=).
-5. **Mathematical Functions:** When using functions such as sin, ln, log, etc., make sure to enclose their arguments in parentheses. Additionally, use exp(x) for the exponential function rather than e^x.
+    * Addition: `+`
+    * Subtraction: `-`
+    * Division: `/`
+    * Power: `**` or `^` (**both work**)
+4. **Equation Format:** The equation should explicitly include the equals sign (`=`).
+5. **Mathematical Functions:** When using functions such as `sin`, `cos`, `ln`, `log`, etc., make sure to enclose their arguments in parentheses. Additionally, use `exp(x)` or  `E**x` for the exponential function rather than `e**x`.
 
 ### Expected Output
 *   **Mathematical Classification:** Terminal text identifying the taxonomy of the equation.

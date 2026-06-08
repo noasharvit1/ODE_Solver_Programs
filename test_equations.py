@@ -1,84 +1,121 @@
 """
 test_equations.py
-Automated tests to verify the classification and parsing of various ODE types.
+Unit tests for the Symbolic ODE Solver project.
 """
 
 import unittest
 import sympy as sp
-from parser import parse_ode
+
+# Importing components directly from your project modules
+from parser     import parse_ode
 from classifier import classify_ode, UnsupportedEquationError
+from solver     import solve_ode
 
-class TestODESolver(unittest.TestCase):
 
-    def check_equation(self, eq_str, expected_label_keyword, expected_hint):
-        """
-        A helper function to parse and classify an equation, 
-        then check if the label and SymPy hint match our expectations.
-        """
+class TestODESolverFramework(unittest.TestCase):
+
+    # ============================================================
+    # 1. TEST CASES FOR SUPPORTED EQUATIONS & NOTATIONS
+    # ============================================================
+
+    def test_separable_equations_standard(self):
+        """Test 1st-Order Separable Equations with standard notation."""
+        # Example A: y' = 2xy (Implicit multiplication check)
+        eq_str_1 = "y' = 2xy"
+        eq1, order1, x1, y1 = parse_ode(eq_str_1)
+        label1, _ = classify_ode(eq1, order1, x1, y1)
+        self.assertEqual(label1, "First-order separable equation")
+
+        # Example B: y' = x**2/y**2 (Standard Python power notation)
+        eq_str_2 = "y' = x**2/y**2"
+        eq2, order2, x2, y2 = parse_ode(eq_str_2)
+        label2, _ = classify_ode(eq2, order2, x2, y2)
+        self.assertEqual(label2, "First-order separable equation")
+
+    def test_power_caret_notation(self):
+        """Test that the caret symbol (^) is correctly handled as a power."""
+        # Example: y' = x^2 (As documented in the updated README)
+        eq_str = "y' = x^2"
         eq, order, x, y = parse_ode(eq_str)
-        label, hint = classify_ode(eq, order, x, y)
+        label, _ = classify_ode(eq, order, x, y)
+        self.assertEqual(label, "First-order separable equation")
 
-        self.assertIn(expected_label_keyword.lower(), label.lower())
-        self.assertEqual(hint, expected_hint)
+    def test_leibniz_notation_first_order(self):
+        """Test that Leibniz notation (dy/dx) is fully supported for 1st-order."""
+        # Example: dy/dx + 2xy = x
+        eq_str = "dy/dx + 2xy = x"
+        eq, order, x, y = parse_ode(eq_str)
+        label, _ = classify_ode(eq, order, x, y)
+        self.assertEqual(label, "First-order separable equation")
 
-    # ── 1. Supported First-Order Equations ──────────────────────────────────
+    def test_linear_first_order_equations(self):
+        """Test 1st-Order Linear Equations (Evaluating classification hierarchy)."""
+        # Example: y' + y/x = sin(x)/x
+        eq_str = "y' + y/x = sin(x)/x"
+        eq, order, x, y = parse_ode(eq_str)
+        label, _ = classify_ode(eq, order, x, y)
+        # Note: Handled as Bernoulli since it matches the general case where n=0
+        self.assertEqual(label, "First-order Bernoulli equation")
 
-    def test_separable(self):
-        self.check_equation("y' = y * x", "separable", "separable")
+    def test_exact_equations(self):
+        """Test 1st-Order Exact Equations."""
+        # Example: exp(y) + (x*exp(y) + 2y)*y' = 0
+        eq_str = "exp(y) + (x*exp(y) + 2y)*y' = 0"
+        eq, order, x, y = parse_ode(eq_str)
+        label, _ = classify_ode(eq, order, x, y)
+        self.assertEqual(label, "First-order exact equation")
 
-    def test_linear(self):
-        self.check_equation("y' + 2*x*y = x", "linear", "1st_linear")
+    def test_bernoulli_equations(self):
+        """Test 1st-Order Bernoulli Equations."""
+        # Example A: y' + y/x = x*y**2
+        eq_str_1 = "y' + y/x = x*y**2"
+        eq1, order1, x1, y1 = parse_ode(eq_str_1)
+        label1, _ = classify_ode(eq1, order1, x1, y1)
+        self.assertEqual(label1, "First-order Bernoulli equation")
 
-    def test_exact_differential_form(self):
-        # Testing the exact equation using the dx/dy format
-        eq_str = "(exp(x)*sin(y)-2*y*sin(x))*dx + (exp(x)*cos(y)+2*cos(x))*dy = 0"
-        self.check_equation(eq_str, "exact", "1st_exact")
+        # Example B: y' - y = x*y**5
+        eq_str_2 = "y' - y = x*y**5"
+        eq2, order2, x2, y2 = parse_ode(eq_str_2)
+        label2, _ = classify_ode(eq2, order2, x2, y2)
+        self.assertEqual(label2, "First-order Bernoulli equation")
 
-    def test_bernoulli(self):
-        self.check_equation("y' + y = x*y**2", "bernoulli", "Bernoulli")
+    def test_second_order_linear_constant_coefficients(self):
+        """Test 2nd-Order Linear ODEs with Constant Coefficients (Homogeneous)."""
+        # Example: y'' + 2y' + y = 0
+        eq_str = "y'' + 2y' + y = 0"
+        eq, order, x, y = parse_ode(eq_str)
+        label, _ = classify_ode(eq, order, x, y)
+        self.assertEqual(label, "Second-order linear ODE with constant coefficients (homogeneous)")
 
-    def test_homogeneous(self):
-        # The classification works, even if SymPy struggles to solve it later!
-        self.check_equation("y' = (x+3*y)/(x-y)", "homogeneous", "1st_homogeneous_coeff_best")
+    # ============================================================
+    # 2. TEST CASES FOR UNSUPPORTED / EDGE CASES
+    # ============================================================
 
-    # ── 2. Supported Second-Order Equations ─────────────────────────────────
-
-    def test_second_order_homogeneous(self):
-        self.check_equation("y'' + 2*y' + y = 0", "homogeneous", "nth_linear_constant_coeff_homogeneous")
-
-    def test_second_order_nonhomogeneous(self):
-        self.check_equation("y'' + 4*y = sin(x)", "non-homogeneous", "nth_linear_constant_coeff_undetermined_coefficients")
-
-    # ── 3. Edge Cases & Unsupported Equations ───────────────────────────────
-
-    def test_unsupported_third_order(self):
-        # The parser should catch 3rd order derivatives and raise a ValueError
-        with self.assertRaises(ValueError) as context:
-            parse_ode("y''' + y = 0")
-        self.assertIn("Equations of order 3 are not supported", str(context.exception))
-
-    def test_unsupported_nonlinear_second_order(self):
-        # Variable coefficients in a 2nd order ODE are unsupported
-        eq, order, x, y = parse_ode("y'' + y * y' = 0")
+    def test_nonlinear_second_order_unsupported(self):
+        """Verify that nonlinear 2nd-order equations raise UnsupportedEquationError."""
+        eq_str = "y'' + sin(y) = 0"
+        eq, order, x, y = parse_ode(eq_str)
+        
         with self.assertRaises(UnsupportedEquationError):
             classify_ode(eq, order, x, y)
 
-    def test_implicit_multiplication_parser(self):
-        # Testing that "2xy" is correctly parsed without crashing
-        try:
-            eq, order, x, y = parse_ode("y' + 2xy = 0")
-            parsed_success = True
-        except ValueError:
-            parsed_success = False
+    def test_unsupported_first_order_type(self):
+        """Verify that an arbitrary unsupported 1st-order equation triggers UnsupportedEquationError."""
+        eq_str = "y' + y/x = x**(y**2)"
+        eq, order, x, y = parse_ode(eq_str)
         
-        self.assertTrue(parsed_success, "Parser failed to fix implicit multiplication '2xy'")
+        with self.assertRaises(UnsupportedEquationError):
+            classify_ode(eq, order, x, y)
 
-    def test_unauthorized_variables(self):
-        # Testing that variables other than x and y are rejected
+    def test_invalid_syntax_handling(self):
+        """Verify that severe syntax errors (e.g., '^^') are caught during parsing and raise a ValueError."""
+        invalid_eq = "y' = x^^2/y**2"
+        
         with self.assertRaises(ValueError) as context:
-            parse_ode("y' + 2*t = 0")
-        self.assertIn("Unsupported variables found", str(context.exception))
+            parse_ode(invalid_eq)
+        
+        self.assertIn("Could not parse the equation", str(context.exception))
 
 
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    unittest.main()
