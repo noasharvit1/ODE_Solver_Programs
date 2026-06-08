@@ -5,24 +5,24 @@ This project is a Python-based computational utility designed for solving 1st an
 
 **The program performs the following steps:**
 
-1. Reads the user input- 
-- The equation and initial conditions are entered by the user as strings.
-2. Classifies the differential equation- 
-- The program identifies the type of equation.
-- Displays the equation classification
-- The detected type of equation is shown to the user.
-3. Solves the equation analytically-
-- The program first finds the general solution without using the initial conditions.
-- The program then applies the initial conditions
-- The constants in the general solution are calculated using the given initial conditions.
-- The program displays the particular solution
-- The final solution that satisfies the initial conditions is shown to the user.
-4. Finds the domain of the solution- 
-- The program determines the maximal interval where the solution is defined and valid.
-5. Plots the solution
-- The solution function is plotted over its valid domain.
-6. Verifies the solution
-- The program substitutes the solution back into the original differential equation to confirm that it satisfies the equation.
+1. **User Input Ingestion:** 
+* Reads both the differential equation and its corresponding initial conditions directly from the terminal as standard strings.
+2. **Automated ODE Classification:** 
+* The program identifies the type of equation.
+* Displays the equation classification
+* The detected type of equation is shown to the user.
+3. **Solves the equation analytically:**
+* The program first finds the general solution without using the initial conditions.
+* The program then applies the initial conditions
+* The constants in the general solution are calculated using the given initial conditions.
+* The program displays the particular solution
+* The final solution that satisfies the initial conditions is shown to the user.
+4. **Finds the domain of the solution:** 
+* The program determines the maximal interval where the solution is defined and valid.
+5. **Plots the solution:**
+* The solution function is plotted over its valid domain.
+6. **Verifies the solution:**
+* The program substitutes the solution back into the original differential equation to confirm that it satisfies the equation.
 
 ---
 ## Supported Equation Types & Solution Strategies
@@ -122,7 +122,6 @@ Domain:
 
 Verification:
   The solution satisfies the differential equation. [TRUE]
-  **Output may include:**
 ```
 
 Note: A graph of the specific solution will be automatically displayed in a separate window.
