@@ -94,7 +94,9 @@ Domain:
 (-∞, ∞)
 
 Verification:
-The solution satisfies the differential equation. [TRUE]\n"
+The solution satisfies the differential equation. [TRUE]"
+
+A graph of the specific solution will be automatically displayed in a separate window.
 ```
 
 ### Case 2: Second-Order ODE
@@ -122,9 +124,9 @@ Domain:
 
 Verification:
   The solution satisfies the differential equation. [TRUE]
-```
 
-Note: A graph of the specific solution will be automatically displayed in a separate window.
+A graph of the specific solution will be automatically displayed in a separate window.
+```
 ---
 
 ## Project Structure
